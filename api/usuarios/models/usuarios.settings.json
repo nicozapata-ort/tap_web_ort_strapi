@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "usuarios",
+  "info": {
+    "name": "Usuarios",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Nombre": {
+      "type": "string"
+    },
+    "Apellido": {
+      "type": "string"
+    },
+    "Dni": {
+      "type": "integer"
+    },
+    "Telefono": {
+      "type": "integer"
+    },
+    "Referidos": {
+      "type": "integer"
+    },
+    "Token": {
+      "type": "uid"
+    },
+    "Email": {
+      "type": "email"
+    },
+    "UltimoReferido": {
+      "type": "datetime"
+    }
+  }
+}
