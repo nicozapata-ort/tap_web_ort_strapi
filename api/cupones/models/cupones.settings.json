@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cupones",
+  "info": {
+    "name": "Cupones"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "cupon": {
+      "type": "string"
+    },
+    "usado": {
+      "type": "boolean"
+    }
+  }
+}

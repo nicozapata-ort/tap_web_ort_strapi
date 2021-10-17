@@ -33,6 +33,9 @@
     "Email": {
       "type": "email"
     },
+    "normalizedEmail": {
+      "type": "email"
+    },
     "UltimoReferido": {
       "type": "datetime"
     }

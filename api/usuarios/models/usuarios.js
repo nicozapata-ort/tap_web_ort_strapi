@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-    validarUsuario: async ({ Nombre, Apellido, Dni, Email, Telefono, Token, Referidos }) => {
+    validateUser: async ({ Nombre, Apellido, Dni, Email, Telefono, Token, Referidos }) => {
         const buscarUsuario = strapi.services.usuarios.findOne
         if (Nombre == null || Nombre.length < 2) {
             const e = new Error('Nombre inválido')
@@ -20,7 +20,7 @@ module.exports = {
             const e = new Error('Dni inválido')
             e.type = 'DNI_INVALIDO'
             throw e
-        } else if (Email == null || (Email.split('@')).length == 1 || await buscarUsuario({ Email: Email })) {
+        } else if (Email == null || (Email.split('@')).length == 1 || await buscarUsuario({ normalizedEmail: Email.toUpperCase() })) {
             const e = new Error('Email inválido')
             e.type = 'EMAIL_INVALIDO'
             throw e
