@@ -76,7 +76,8 @@ module.exports = {
         })
 
         ctx.send({
-            data: users
+            data: users,
+            positionUserEmail: position + 1
         })
     }
 };
