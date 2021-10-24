@@ -35,7 +35,7 @@ module.exports = {
             await strapi.services.cupones.update({ id: cupon.id }, cupon);
             ctx.send({
                 status: 201,
-                url_referidos: 'http://localhost:3000?' + `referr=${user.Token}`,
+                url_referidos: process.env.URL_LANDING + `?referr=${user.Token}`,
                 cupon: cupon.cupon
             });
         } catch (error) {
@@ -76,7 +76,8 @@ module.exports = {
         })
 
         ctx.send({
-            data: users
+            data: users,
+            positionUserEmail: position + 1
         })
     }
 };

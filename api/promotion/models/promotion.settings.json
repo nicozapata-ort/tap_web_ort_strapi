@@ -12,11 +12,23 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "description_date": {
-      "type": "string"
+    "dateMax": {
+      "type": "date"
+    },
+    "dateMin": {
+      "type": "date"
     },
     "description": {
       "type": "richtext"
+    },
+    "prizeMinPrice": {
+      "type": "float"
+    },
+    "prizeMaxPrice": {
+      "type": "float"
+    },
+    "maxParticipants": {
+      "type": "integer"
     }
   }
 }
