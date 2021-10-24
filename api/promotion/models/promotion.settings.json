@@ -13,7 +13,8 @@
   "pluginOptions": {},
   "attributes": {
     "description": {
-      "type": "richtext"
+      "type": "richtext",
+      "maxLength": 130
     },
     "prizeMinPrice": {
       "type": "decimal"
