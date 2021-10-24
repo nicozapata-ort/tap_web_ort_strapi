@@ -7,7 +7,7 @@
 
 module.exports = {
     validateUser: async ({ Nombre, Apellido, Dni, Email, Telefono, Token, Referidos }) => {
-        const buscarUsuario = strapi.services.usuarios.findOne
+        const buscarUsuario = strapi.services.participants.findOne
         if (Nombre == null || Nombre.length < 2) {
             const e = new Error('Nombre inválido')
             e.type = 'NOMBRE_INVALIDO'
@@ -28,7 +28,7 @@ module.exports = {
             const e = new Error('Telefono inválido')
             e.type = 'TELEFONO_INVALIDO'
             throw e
-        } else if (Token == null || (await strapi.services.usuarios.findOne({ Token: Token })) != null) {
+        } else if (Token == null || (await strapi.services.participants.findOne({ Token: Token })) != null) {
             const e = new Error('Token inválido')
             e.type = 'TOKEN_INVALIDO'
             throw e

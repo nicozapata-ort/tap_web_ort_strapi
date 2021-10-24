@@ -1,6 +1,6 @@
 'use strict';
 const { v4: uuidv4 } = require('uuid')
-const { validateUser } = require('../models/usuarios.js')
+const { validateUser } = require('../models/participants.js')
 const RANKING_LENGTH = 0
 
 /**
@@ -22,13 +22,13 @@ module.exports = {
             user.UltimoReferido = new Date();
             const { referr } = ctx.query;
             console.log(referr)
-            await strapi.services.usuarios.create(user);
+            await strapi.services.participants.create(user);
             if (referr) {
-                const entity = await strapi.services.usuarios.findOne({ Token: referr })
+                const entity = await strapi.services.participants.findOne({ Token: referr })
                 if (entity) {
                     entity.UltimoReferido = new Date();
                     entity.Referidos++;
-                    await strapi.services.usuarios.update({ id: entity.id }, entity);
+                    await strapi.services.participants.update({ id: entity.id }, entity);
                 }
             }
             cupon.usado = true;
@@ -54,7 +54,7 @@ module.exports = {
         if (!email) {
             throw new Error()
         }
-        let users = await strapi.services.usuarios.find();
+        let users = await strapi.services.participants.find();
         const sortUsers = (a, b) => {
             if (a.Referidos === b.Referidos) {
                 return a.UltimoReferido - b.UltimoReferido

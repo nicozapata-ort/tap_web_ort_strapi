@@ -12,10 +12,10 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "dateMax": {
+    "dateMin": {
       "type": "date"
     },
-    "dateMin": {
+    "dateMax": {
       "type": "date"
     },
     "description": {

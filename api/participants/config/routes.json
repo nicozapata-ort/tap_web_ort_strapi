@@ -2,40 +2,40 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/usuarios",
-      "handler": "usuarios.find",
+      "path": "/participants",
+      "handler": "participants.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/usuarios/count",
-      "handler": "usuarios.count",
+      "path": "/participants/count",
+      "handler": "participants.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/usuarios/:id",
-      "handler": "usuarios.findOne",
+      "path": "/participants/:id",
+      "handler": "participants.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/usuario",
-      "handler": "usuarios.create",
+      "path": "/participant",
+      "handler": "participants.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/usuarios",
-      "handler": "usuarios.registrar",
+      "path": "/participants",
+      "handler": "participants.registrar",
       "config": {
         "policies": []
       }
@@ -43,23 +43,23 @@
     {
       "method": "GET",
       "path": "/ranking",
-      "handler": "usuarios.getRanking",
+      "handler": "participants.getRanking",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/usuarios/:id",
-      "handler": "usuarios.update",
+      "path": "/participants/:id",
+      "handler": "participants.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/usuarios/:id",
-      "handler": "usuarios.delete",
+      "path": "/participants/:id",
+      "handler": "participants.delete",
       "config": {
         "policies": []
       }
