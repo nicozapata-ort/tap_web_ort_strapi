@@ -1,0 +1,3 @@
+DATABASE_URI=mongodb+srv://Admin:Admin123456789@pruebafavoritos.aewp1.mongodb.net/LandingWebTap?retryWrites=true&w=majority
+DATABASE_NAME=LandingWebTap
+URL_LANDING=http://localhost:3000
