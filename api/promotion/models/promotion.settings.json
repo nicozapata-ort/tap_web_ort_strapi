@@ -29,6 +29,21 @@
     },
     "maxParticipants": {
       "type": "integer"
+    },
+    "couponPrizeLongDescription": {
+      "type": "text",
+      "maxLength": 100
+    },
+    "couponPrizeShortDescription": {
+      "type": "string",
+      "maxLength": 70
+    },
+    "descriptionSharePrizeCoupon": {
+      "type": "text",
+      "maxLength": 80
+    },
+    "firstPlaces": {
+      "type": "integer"
     }
   }
 }

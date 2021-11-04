@@ -79,5 +79,10 @@ module.exports = {
             data: users,
             positionUserEmail: position + 1
         })
+    },
+
+    async obtenerParticipantes(ctx){
+        const participantes = await strapi.services.participants.find(ctx.query)
+        return participantes[0]
     }
 };
