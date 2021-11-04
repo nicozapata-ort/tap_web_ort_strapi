@@ -41,6 +41,9 @@
     "descriptionSharePrizeCoupon": {
       "type": "string",
       "maxLength": 80
+    },
+    "firstPlaces": {
+      "type": "integer"
     }
   }
 }
