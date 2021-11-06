@@ -21,7 +21,6 @@ module.exports = {
             user.normalizedEmail = user.Email.toUpperCase()
             user.UltimoReferido = new Date();
             const { referr } = ctx.query;
-            console.log(referr)
             await strapi.services.participants.create(user);
             if (referr) {
                 const entity = await strapi.services.participants.findOne({ Token: referr })
@@ -39,49 +38,57 @@ module.exports = {
                 cupon: cupon.cupon
             });
         } catch (error) {
-            console.log(error)
             ctx.send({
                 status: 401,
-                type: error
+                type: error,
+                message: error.message
             });
         }
 
     },
 
     async getRanking(ctx) {
-        const { email } = ctx.request.query
-        console.log(email)
-        if (!email) {
-            throw new Error()
-        }
-        let users = await strapi.services.participants.find();
-        const sortUsers = (a, b) => {
-            if (a.Referidos === b.Referidos) {
-                return a.UltimoReferido - b.UltimoReferido
-            } else {
-                return b.Referidos - a.Referidos
+        try {
+            const { email } = ctx.request.query
+            if (!email) {
+                throw new Error()
             }
-        }
-        users = users.sort(sortUsers)
-        const position = users.findIndex((u) => u.Email === email)
-        const userInTop = position <= RANKING_LENGTH
-        users = users.splice(RANKING_LENGTH)
-        users = users.map((u, index) => {
-            return {
-                Nombre: u.Nombre,
-                Apellido: u.Apellido[0] + '.',
-                position: index + 1,
-                Referidos: u.Referidos
+            let users = await strapi.services.participants.find();
+            const sortUsers = (a, b) => {
+                if (a.Referidos === b.Referidos) {
+                    return a.UltimoReferido - b.UltimoReferido
+                } else {
+                    return b.Referidos - a.Referidos
+                }
             }
-        })
+            users = users.sort(sortUsers)
+            const position = users.findIndex((u) => u.Email === email)
+            const userInTop = position <= RANKING_LENGTH
+            users = users.splice(RANKING_LENGTH)
+            users = users.map((u, index) => {
+                return {
+                    Nombre: u.Nombre,
+                    Apellido: u.Apellido[0] + '.',
+                    position: index + 1,
+                    Referidos: u.Referidos
+                }
+            })
 
-        ctx.send({
-            data: users,
-            positionUserEmail: position + 1
-        })
+            ctx.send({
+                status: 200,
+                data: users,
+                positionUserEmail: position + 1
+            })
+        } catch (error) {
+            ctx.send({
+                status: 401,
+                type: error,
+                message: error.message
+            });
+        }
     },
 
-    async obtenerParticipantes(ctx){
+    async obtenerParticipantes(ctx) {
         const participantes = await strapi.services.participants.find(ctx.query)
         return participantes[0]
     }

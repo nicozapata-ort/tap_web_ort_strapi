@@ -44,6 +44,14 @@
     },
     "firstPlaces": {
       "type": "integer"
+    },
+    "descriptionFirstPrize": {
+      "type": "text",
+      "maxLength": 30
+    },
+    "descriptionSecondPrize": {
+      "type": "text",
+      "maxLength": 30
     }
   }
 }
