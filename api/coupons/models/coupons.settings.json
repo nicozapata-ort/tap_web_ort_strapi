@@ -1,8 +1,9 @@
 {
   "kind": "collectionType",
-  "collectionName": "cupones",
+  "collectionName": "coupons",
   "info": {
-    "name": "Cupones"
+    "name": "coupons",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -11,11 +12,15 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "cupon": {
+    "coupon": {
       "type": "string"
     },
-    "usado": {
+    "used": {
       "type": "boolean"
+    },
+    "promotion": {
+      "via": "coupons",
+      "model": "promotion"
     }
   }
 }

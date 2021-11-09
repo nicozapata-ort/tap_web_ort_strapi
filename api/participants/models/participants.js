@@ -6,46 +6,47 @@
  */
 
 module.exports = {
-    validateUser: async ({ Nombre, Apellido, Dni, Email, Telefono, Token, Referidos }) => {
-        const buscarUsuario = strapi.services.participants.findOne
-        if (Nombre == null || Nombre.length < 2) {
+    validateUser: async ({ name, lastname, dni, email, phone, token, referrals, promotion }) => {
+        const searchUser = strapi.services.participants.findOne
+        if (name == null || name.length < 2) {
             const e = new Error('Nombre inválido')
             e.type = 'NOMBRE_INVALIDO'
             throw e
-        } else if (Apellido == null || Apellido.length < 2) {
+        } else if (lastname == null || lastname.length < 2) {
             const e = new Error('Apellido inválido')
             e.type = 'APELLIDO_INVALIDO'
             throw e
-        } else if (Dni == null || isNaN(Dni) || Dni < 100000 || Dni > 99999999 || await buscarUsuario({ Dni: Dni })) {
+        } else if (dni == null || isNaN(dni) || dni < 100000 || dni > 99999999 || await searchUser({ dni: dni, promotion })) {
             const e = new Error('Dni inválido')
             e.type = 'DNI_INVALIDO'
             throw e
-        } else if (Email == null || (Email.split('@')).length == 1 || await buscarUsuario({ normalizedEmail: Email.toUpperCase() })) {
+        } else if (email == null || (email.split('@')).length == 1 || await searchUser({ normalizedEmail: email.toUpperCase(), promotion })) {
             const e = new Error('Email inválido')
             e.type = 'EMAIL_INVALIDO'
             throw e
-        } else if (Telefono == null || isNaN(Telefono) || await buscarUsuario({ Telefono: Telefono })) {
+        } else if (phone == null || isNaN(phone) || await searchUser({ phone: phone, promotion })) {
             const e = new Error('Telefono inválido')
             e.type = 'TELEFONO_INVALIDO'
             throw e
-        } else if (Token == null || (await strapi.services.participants.findOne({ Token: Token })) != null) {
+        } else if (token == null || (await searchUser({ token: token, promotion })) != null) {
             const e = new Error('Token inválido')
             e.type = 'TOKEN_INVALIDO'
             throw e
-        } else if (Referidos == null || isNaN(Referidos)) {
+        } else if (referrals == null || isNaN(referrals)) {
             const e = new Error('Referidos inválido')
             e.type = 'REFERIDOS_INVALIDO'
             throw e
         }
 
         return {
-            Nombre,
-            Apellido,
-            Dni,
-            Email,
-            Telefono,
-            Token,
-            Referidos
+            name,
+            lastname,
+            dni,
+            email,
+            phone,
+            token,
+            referrals,
+            promotion: promotion
         }
     }
 };

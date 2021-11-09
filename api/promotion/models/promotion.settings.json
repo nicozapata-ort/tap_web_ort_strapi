@@ -12,6 +12,10 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "title": {
+      "type": "string",
+      "maxLength": 20
+    },
     "dateMin": {
       "type": "date"
     },
@@ -52,6 +56,32 @@
     "descriptionSecondPrize": {
       "type": "text",
       "maxLength": 30
+    },
+    "promotionExpiredMessage": {
+      "type": "richtext"
+    },
+    "noAvailableCouponsMessage": {
+      "type": "richtext"
+    },
+    "Picture": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "coupons": {
+      "via": "promotion",
+      "collection": "coupons"
+    },
+    "participants": {
+      "collection": "participants",
+      "via": "promotion"
     }
   }
 }

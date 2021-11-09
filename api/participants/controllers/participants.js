@@ -1,41 +1,61 @@
 'use strict';
 const { v4: uuidv4 } = require('uuid')
 const { validateUser } = require('../models/participants.js')
-const RANKING_LENGTH = 0
 
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#core-controllers)
  * to customize this controller
  */
 
+const customizeUser = async ({ user, promotionId }) => {
+    let validUser = user
+    validUser.token = uuidv4();
+    validUser.referrals = 0;
+    validUser.promotion = promotionId
+    validUser = await validateUser(validUser);
+    validUser.normalizedEmail = validUser.email.toUpperCase()
+    validUser.lastReferral = new Date();
+    return validUser
+
+}
+
+const searchCouponByPromotionId = async (promotionId) => {
+    const coupon = await strapi.services.coupons.findOne({ used: false, promotion: promotionId })
+    if (!coupon) {
+        throw new Error('No hay  cupones disponibles')
+    }
+    return coupon
+}
+
+const updateReferral = async ({ referr, promotionId }) => {
+    const entity = await strapi.services.participants.findOne({ token: referr, promotion: promotionId })
+    if (entity) {
+        entity.lastReferral = new Date();
+        entity.referrals++;
+        await strapi.services.participants.update({ id: entity.id }, entity);
+    }
+}
+const finishRegister = async ({ validUser, coupon }) => {
+    await strapi.services.participants.create(validUser);
+    coupon.used = true;
+    await strapi.services.coupons.update({ id: coupon.id }, coupon);
+}
 module.exports = {
-    async registrar(ctx) {
+    async register(ctx) {
         try {
-            const cupon = await strapi.services.cupones.findOne({ usado: false })
-            if (!cupon) {
-                throw new Error('No hay cupones disponibles')
-            }
-            ctx.request.body.Token = uuidv4();
-            ctx.request.body.Referidos = 0;
-            const user = await validateUser(ctx.request.body);
-            user.normalizedEmail = user.Email.toUpperCase()
-            user.UltimoReferido = new Date();
+            const { user, promotionId } = await ctx.request.body;
+            const coupon = await searchCouponByPromotionId(promotionId)
+            const validUser = await customizeUser({ user, promotionId })
             const { referr } = ctx.query;
-            await strapi.services.participants.create(user);
+
             if (referr) {
-                const entity = await strapi.services.participants.findOne({ Token: referr })
-                if (entity) {
-                    entity.UltimoReferido = new Date();
-                    entity.Referidos++;
-                    await strapi.services.participants.update({ id: entity.id }, entity);
-                }
+                updateReferral({ referr, promotionId })
             }
-            cupon.usado = true;
-            await strapi.services.cupones.update({ id: cupon.id }, cupon);
+            await finishRegister({ validUser, coupon })
             ctx.send({
                 status: 201,
-                url_referidos: process.env.URL_LANDING + `?referr=${user.Token}`,
-                cupon: cupon.cupon
+                url_referrals: process.env.URL_LANDING + `?referr=${validUser.token}`,
+                coupon: coupon.coupon
             });
         } catch (error) {
             ctx.send({
@@ -49,28 +69,37 @@ module.exports = {
 
     async getRanking(ctx) {
         try {
-            const { email } = ctx.request.query
-            if (!email) {
+            const { email, promotionId } = ctx.request.query
+
+            //const { email, promotionId } 
+            if (!promotionId) {
                 throw new Error()
             }
-            let users = await strapi.services.participants.find();
+            const promotion = await strapi.services.promotion.findOne({ id: promotionId });
+            let users = promotion.participants
             const sortUsers = (a, b) => {
-                if (a.Referidos === b.Referidos) {
-                    return a.UltimoReferido - b.UltimoReferido
+                if (a.referrals === b.referrals) {
+                    return a.lastReferral - b.lastReferral
                 } else {
-                    return b.Referidos - a.Referidos
+                    return b.referrals - a.referrals
                 }
             }
             users = users.sort(sortUsers)
-            const position = users.findIndex((u) => u.Email === email)
-            const userInTop = position <= RANKING_LENGTH
-            users = users.splice(RANKING_LENGTH)
+
+            let position = 0
+            if (email) {
+                position = users.findIndex((u) => u.email === email)
+            }
+
+            if (users.length > promotion.maxParticipants) {
+                users = users.splice(promotion.maxParticipants)
+            }
             users = users.map((u, index) => {
                 return {
-                    Nombre: u.Nombre,
-                    Apellido: u.Apellido[0] + '.',
+                    name: u.name,
+                    lastname: u.lastname[0] + '.',
                     position: index + 1,
-                    Referidos: u.Referidos
+                    referrals: u.referrals
                 }
             })
 
