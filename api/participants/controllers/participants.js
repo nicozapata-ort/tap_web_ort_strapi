@@ -88,7 +88,7 @@ module.exports = {
 
             let position = 0
             if (email) {
-                position = users.findIndex((u) => u.email === email)
+                position = (users.findIndex((u) => u.email === email)) + 1
             }
 
             if (users.length > promotion.maxParticipants) {
@@ -106,7 +106,7 @@ module.exports = {
             ctx.send({
                 status: 200,
                 data: users,
-                positionUserEmail: position + 1
+                positionUserEmail: position
             })
         } catch (error) {
             ctx.send({
