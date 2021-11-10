@@ -75,12 +75,12 @@
       "required": false,
       "pluginOptions": {}
     },
-    "coupons": {
-      "via": "promotion",
-      "collection": "coupons"
-    },
     "participants": {
       "collection": "participants",
+      "via": "promotion"
+    },
+    "coupons": {
+      "collection": "coupons",
       "via": "promotion"
     }
   }
