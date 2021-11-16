@@ -40,6 +40,30 @@ const finishRegister = async ({ validUser, coupon }) => {
     coupon.used = true;
     await strapi.services.coupons.update({ id: coupon.id }, coupon);
 }
+
+const sortUsers = (a, b) => {
+    if (a.referrals === b.referrals) {
+        return a.lastReferral - b.lastReferral
+    } else {
+        return b.referrals - a.referrals
+    }
+}
+
+const validRanking = ({ users, promotion }) => {
+    if (users.length > promotion.maxParticipants) {
+        users = users.splice(promotion.maxParticipants)
+    }
+    users = users.map((u, index) => {
+        return {
+            name: u.name,
+            lastname: u.lastname[0] + '.',
+            position: index + 1,
+            referrals: u.referrals
+        }
+    })
+    return users
+}
+
 module.exports = {
     async register(ctx) {
         try {
@@ -71,19 +95,12 @@ module.exports = {
         try {
             const { email, promotionId } = ctx.request.query
 
-            //const { email, promotionId } 
             if (!promotionId) {
                 throw new Error()
             }
             const promotion = await strapi.services.promotion.findOne({ id: promotionId });
             let users = promotion.participants
-            const sortUsers = (a, b) => {
-                if (a.referrals === b.referrals) {
-                    return a.lastReferral - b.lastReferral
-                } else {
-                    return b.referrals - a.referrals
-                }
-            }
+
             users = users.sort(sortUsers)
 
             let position = 0
@@ -91,17 +108,7 @@ module.exports = {
                 position = (users.findIndex((u) => u.email === email)) + 1
             }
 
-            if (users.length > promotion.maxParticipants) {
-                users = users.splice(promotion.maxParticipants)
-            }
-            users = users.map((u, index) => {
-                return {
-                    name: u.name,
-                    lastname: u.lastname[0] + '.',
-                    position: index + 1,
-                    referrals: u.referrals
-                }
-            })
+            users = await validRanking({ users, promotion })
 
             ctx.send({
                 status: 200,

@@ -37,7 +37,6 @@ module.exports = {
             e.type = 'REFERIDOS_INVALIDO'
             throw e
         }
-
         return {
             name,
             lastname,
