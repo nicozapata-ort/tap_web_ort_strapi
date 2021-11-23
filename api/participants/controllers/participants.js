@@ -20,6 +20,9 @@ const customizeUser = async ({ user, promotionId }) => {
 }
 
 const searchCouponByPromotionId = async (promotionId) => {
+    if (!promotionId) {
+        throw new Error('Id de promoción inválido')
+    }
     const coupon = await strapi.services.coupons.findOne({ used: false, promotion: promotionId })
     if (!coupon) {
         throw new Error('No hay  cupones disponibles')
@@ -64,6 +67,14 @@ const validRanking = ({ users, promotion }) => {
     return users
 }
 
+const searchPromotionById = async (promotionId) => {
+    if (!promotionId) {
+        throw new Error()
+    }
+    const promotion = await strapi.services.promotion.findOne({ id: promotionId });
+    return promotion
+}
+
 module.exports = {
     async register(ctx) {
         try {
@@ -82,6 +93,7 @@ module.exports = {
                 coupon: coupon.coupon
             });
         } catch (error) {
+            ctx
             ctx.send({
                 status: 401,
                 type: error,
@@ -95,10 +107,7 @@ module.exports = {
         try {
             const { email, promotionId } = ctx.request.query
 
-            if (!promotionId) {
-                throw new Error()
-            }
-            const promotion = await strapi.services.promotion.findOne({ id: promotionId });
+            const promotion = await searchPromotionById(promotionId)
             let users = promotion.participants
 
             users = users.sort(sortUsers)

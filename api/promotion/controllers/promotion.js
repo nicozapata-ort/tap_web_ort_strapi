@@ -21,6 +21,7 @@ module.exports = {
             promotion.coupons = promotion.coupons.filter(coupon => coupon.used === false)
             promotion.couponsAvailabes = promotion.coupons.length > 0
             delete promotion.coupons
+            delete promotion.participants
 
             return promotion
         } catch (error) {
