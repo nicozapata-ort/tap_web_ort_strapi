@@ -122,7 +122,7 @@ module.exports = {
             ctx.send({
                 status: 200,
                 data: users,
-                positionUserEmail: position
+                positionUserEmail: position,
             })
         } catch (error) {
             ctx.send({
@@ -133,8 +133,4 @@ module.exports = {
         }
     },
 
-    async obtenerParticipantes(ctx) {
-        const participantes = await strapi.services.participants.find(ctx.query)
-        return participantes[0]
-    }
 };

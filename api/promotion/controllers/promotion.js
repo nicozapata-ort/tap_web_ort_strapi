@@ -1,20 +1,21 @@
 'use strict';
+const { ERRORS_STRINGS } = require('../../../config/functions/errors/erros.js')
 
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#core-controllers)
  * to customize this controller
  */
-const INVALID_PROMOTION_ID_MESSAGE = 'INVALID_PROMOTION_ID'
-const SERVER_UNEXPECTED_ERROR_MESSAGE = 'UNEXPECTED_ERROR'
 
 module.exports = {
     async findOnePromotion(ctx) {
         try {
             const { id } = ctx.params;
-            if (!id) {
-                throw new Error(INVALID_PROMOTION_ID_MESSAGE)
-            }
             const promotion = await strapi.services.promotion.findOne({ id })
+            if (!promotion) {
+                const e = new Error(ERRORS_STRINGS.INVALID_PROMOTION_ID_MESSAGE)
+                e.type = ERRORS_STRINGS.INVALID_PROMOTION_ID_TYPE
+                throw e
+            }
             const today = new Date()
             const dateMax = new Date(promotion.dateMax)
             promotion.expired = dateMax < today
@@ -25,11 +26,11 @@ module.exports = {
 
             return promotion
         } catch (error) {
-            if (error.message === INVALID_PROMOTION_ID_MESSAGE) {
+            if (error.type === ERRORS_STRINGS.INVALID_PROMOTION_ID_TYPE) {
                 ctx.body = error.message
                 ctx.status = 404
             } else {
-                ctx.body = SERVER_UNEXPECTED_ERROR_MESSAGE
+                ctx.body = ERRORS_STRINGS.SERVER_UNEXPECTED_ERROR_MESSAGE
                 ctx.status = 500
             }
             ctx.send()
