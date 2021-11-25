@@ -12,11 +12,94 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "description_date": {
-      "type": "string"
+    "title": {
+      "type": "string",
+      "maxLength": 20,
+      "required": true
+    },
+    "dateMin": {
+      "type": "date",
+      "required": true
+    },
+    "dateMax": {
+      "type": "date",
+      "required": true
     },
     "description": {
-      "type": "richtext"
+      "type": "richtext",
+      "required": true
+    },
+    "prizeMinPrice": {
+      "type": "float",
+      "required": true
+    },
+    "prizeMaxPrice": {
+      "type": "float",
+      "required": true
+    },
+    "maxParticipants": {
+      "type": "integer",
+      "required": true
+    },
+    "couponPrizeLongDescription": {
+      "type": "text",
+      "maxLength": 100,
+      "required": true
+    },
+    "couponPrizeShortDescription": {
+      "type": "string",
+      "maxLength": 70,
+      "required": true
+    },
+    "descriptionSharePrizeCoupon": {
+      "type": "text",
+      "maxLength": 80,
+      "required": true
+    },
+    "firstPlaces": {
+      "type": "integer",
+      "required": true
+    },
+    "descriptionFirstPrize": {
+      "type": "text",
+      "maxLength": 30,
+      "required": true
+    },
+    "descriptionSecondPrize": {
+      "type": "text",
+      "maxLength": 30,
+      "required": true
+    },
+    "promotionExpiredMessage": {
+      "type": "richtext",
+      "required": true
+    },
+    "noAvailableCouponsMessage": {
+      "type": "richtext",
+      "required": true
+    },
+    "Picture": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": true,
+      "pluginOptions": {}
+    },
+    "coupons": {
+      "via": "promotion",
+      "collection": "coupons"
+    },
+    "participants": {
+      "collection": "participants",
+      "via": "promotion"
+    },
+    "descriptionTermsAndConditions": {
+      "type": "text"
     }
   }
 }

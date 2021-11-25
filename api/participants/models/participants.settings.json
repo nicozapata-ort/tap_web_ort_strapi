@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "usuarios",
+  "collectionName": "participants",
   "info": {
-    "name": "Usuarios",
+    "name": "Participants",
     "description": ""
   },
   "options": {
@@ -12,29 +12,36 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Nombre": {
+    "name": {
       "type": "string"
     },
-    "Apellido": {
+    "lastname": {
       "type": "string"
     },
-    "Dni": {
+    "dni": {
       "type": "integer"
     },
-    "Telefono": {
+    "phone": {
       "type": "integer"
     },
-    "Referidos": {
+    "referrals": {
       "type": "integer"
     },
-    "Token": {
+    "token": {
       "type": "uid"
     },
-    "Email": {
+    "email": {
       "type": "email"
     },
-    "UltimoReferido": {
+    "normalizedEmail": {
+      "type": "email"
+    },
+    "lastReferral": {
       "type": "datetime"
+    },
+    "promotion": {
+      "via": "participants",
+      "model": "promotion"
     }
   }
 }

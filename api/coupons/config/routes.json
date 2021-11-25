@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/promotions",
-      "handler": "promotion.find",
+      "path": "/coupons",
+      "handler": "coupons.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/promotions/count",
-      "handler": "promotion.count",
+      "path": "/coupons/count",
+      "handler": "coupons.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/promotions/:id",
-      "handler": "promotion.findOnePromotion",
+      "path": "/coupons/:id",
+      "handler": "coupons.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/promotions",
-      "handler": "promotion.create",
+      "path": "/coupons",
+      "handler": "coupons.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/promotions/:id",
-      "handler": "promotion.update",
+      "path": "/coupons/:id",
+      "handler": "coupons.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/promotions/:id",
-      "handler": "promotion.delete",
+      "path": "/coupons/:id",
+      "handler": "coupons.delete",
       "config": {
         "policies": []
       }

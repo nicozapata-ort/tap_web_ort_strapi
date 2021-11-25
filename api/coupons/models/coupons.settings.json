@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "coupons",
+  "info": {
+    "name": "coupons",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "coupon": {
+      "type": "string",
+      "required": true
+    },
+    "used": {
+      "default": false,
+      "type": "boolean",
+      "required": true
+    },
+    "promotion": {
+      "via": "coupons",
+      "model": "promotion",
+      "required": true
+    }
+  }
+}
