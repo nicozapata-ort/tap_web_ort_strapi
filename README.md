@@ -1,6 +1,6 @@
 #Strapi personalizado para TAP
 
-Agregar las modifiaciones en las variables de entorno, bien sea con un archivo .env o por otro método utilizando las siguientes descripciones: 
+Agregar las modificaciones en las variables de entorno, bien sea con un archivo .env o por otro método utilizando las siguientes descripciones: 
 
 DATABASE_HOST: IP o URL de donde este hosteada la base de datos.
 DATABASE_PORT: puerto a utilizar para conectarse a la base de datos.
@@ -16,3 +16,5 @@ ADMIN_JWT_SECRET: string alfanumérico que será utilizado para codificar los to
 Una vez se hayan creado las tablas en la base de datos, buscar la tabla participantes y verificar que los campos phone y dni tengan como tipo de datos bigint y no int, en caso de que no sea así, cambiarlos para que queden en bigint.
 
 
+#Manuales
+En la carpeta principal se encuentran tanto el Manual de Usuario y el Manual del Programador con todas las especificaciones del sistema.
