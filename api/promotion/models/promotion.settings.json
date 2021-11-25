@@ -97,6 +97,9 @@
     "participants": {
       "collection": "participants",
       "via": "promotion"
+    },
+    "descriptionTermsAndConditions": {
+      "type": "text"
     }
   }
 }

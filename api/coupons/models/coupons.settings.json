@@ -23,8 +23,7 @@
     },
     "promotion": {
       "via": "coupons",
-      "model": "promotion",
-      "required": true
+      "model": "promotion"
     }
   }
 }
